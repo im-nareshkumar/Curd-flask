@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <title>curd app</title>
+</head>
+<body class="bgcolor">
+    <div class="container">
+        <div class="container"><h1 class="my-3 text-center">Task manager</h1></div>
+        <div class="row">
+        <div class="col-3">
+            <div class="card text-center" style="width: 18rem;">
+                <div class="card-body bgcolor2">
+                <h2>Add Task</h2>
+                <form action="/" method="post">
+                    <input type="text" placeholder="Enter the text" class="form-control my-3" name="task">
+                    <input type="submit" value="Add Task" class="btn btn-success my-3">
+                </form>    
+            </div>
+            </div>
+        </div>
+        <div class="col mx-3 text-center">
+
+            <table class="table table-dark table-hover">
+            <tr>
+                <th>id</th>
+                <th>Task</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            {% for task in task_info %}
+            <tr>
+                <td>{{ task.sno }}</td>
+                <td>{{ task.task }}</td>
+                <td>{{ task.status }}</td>
+                <td><a href="/done/{{ task.sno }}" class="btn btn-success">DONE</a>
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal{{ task.sno }}">
+                        EDIT
+                      </button>
+                    <a href="/delete/{{ task.sno }}" class="btn btn-danger">DELETE</a>
+                </td>
+
+            </tr>
+            <div class="modal fade" id="updateModal{{ task.sno }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">update task</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                    <form action="/update/{{ task.sno }}" method="post">
+                    <input type="text" class="form-control mb-4" name="taskal">
+                    <input type="submit"  class="btn btn-warning" value="submit">
+                    </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+            </table>
+        </div>
+        </div>
+    </div>
+    
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</html>
